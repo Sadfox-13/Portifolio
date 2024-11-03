@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Carros</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(pngtree-stunning-3d-render-of-abstract-chemical-background-with-fragment-of-mendeleev-image_13510325.png); 
+            background-repeat: no-repeat;
+            background-size: 100%;
+            padding: 20px;
+        }
+        form {
+            width: 100%;
+            
+            
+
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            
+        }
+        input[type="text"] {
+            width: 400px;
+            padding: 8px;
+            margin: 5px 0 px;
+            box-sizing: border-box;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .btn-export {
+            background-color: #008CBA;
+        }
+        h1{
+            color: white;
+        }
+        .mot{
+            color: white;
+            
+        }
+        .form{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+        }
+        .mot{
+            display: flex;
+            flex-direction: column;
+            
+        }
+    </style>
+</head>
+<body>
+    <h1>Registro de Carros</h1>
+    
+    <form id="car-form">
+        <div class="form">
+            <label for="nome"></label>
+                <input type="text" id="nome" required placeholder="Nome do Cliente">
+            
+            <label for="modelo"></label>
+                <input type="text" id="modelo" required placeholder="Veiculo">
+            
+            <label for="placa"></label>
+                <input type="text" id="placa" required placeholder="Placa do Veículo">
+            
+            <label for="defeito"></label>
+                <input type="text" id="defeito" required placeholder="Safe">
+    
+            <label for="Bl01"></label>
+                <input type="text" id="Bl01" required placeholder="Bl01">
+    
+            <label for="Bl02"></label>
+                <input type="text" id="Bl02" required placeholder="Bl02">
+            
+            <label for="Tecnico"></label>
+                <select name="Tecnico" id="Tecnico">
+                    <option value="">Nome do tecnico</option>
+                    <option value="Dener">Dener</option>
+                    <option value="Davi">Davi</option>
+                    <option value="Mayara">Mayara</option>
+                </select>
+
+             <label for="data"></label>
+                <input type="date" id="data" required>
+            
+                <div class="desis">
+                    <label for="motivo" class="mot">Motivo da Desinstalação</label>
+                        <select id="motivo" name="motivo" required>
+                            <option value="">Selecione um motivo</option>
+                            <option value="BL01 INOPERANTE">BL01 INOPERANTE</option>
+                            <option value="BL02 INOPERANTE">BL02 INOPERANTE</option>
+                            <option value="BL01 NAO RECEBE COMANDO FISICAMENTE">BL01 NÃO RECEBE COMANDO FISICAMENTE</option>
+                            <option value="GPS TRAVADO">GPS TRAVADO</option>
+                            <option value="SETA LIGADA CONSTANTEMENTE">SETA LIGADA CONSTANTEMENTE</option>
+                            <option value="BUZZER LIGAR CONSTANTEMENTE">BUZZER LIGAR CONSTANTEMENTE</option>
+                            <option value="DESINSTALACAO">DESINSTALAÇÃO</option>
+                            <option value="FALTA DE COMUNICACAO">FALTA DE COMUNICAÇÃO</option>       
+                            <option value="CANCELAMENTO DE BACKLOG">CANCELAMENTO DE BACKLOG</option>
+                            <option value="EQUIPAMENTO RETIRADO POR TERCEIRO">EQUIPAMENTO RETIRADO POR TERCEIRO</option>  
+                            <option value="SEM COMUNICACAO">SEM COMUNICAÇÃO</option>  
+                        </select>
+                </div>
+          
+        </div>
+       
+
+
+        
+        <button type="button" onclick="salvarDados()">Salvar Registro</button>
+        <button type="button" class="btn-export" onclick="exportarParaExcel()">Exportar para Excel</button>
+    </form>
+    
+    <script>
+        // Array para armazenar os registros
+        const registros = [];
+
+        // Função para salvar os dados do formulário
+        function salvarDados() {
+            // Obter os valores dos campos
+            const nome = document.getElementById('nome').value;
+            const modelo = document.getElementById('modelo').value;
+            const placa = document.getElementById('placa').value;
+            const defeito = document.getElementById('defeito').value;
+            const Bl01 = document.getElementById('Bl01').value;
+            const Bl02 = document.getElementById('Bl02').value;
+            const Tecnico = document.getElementById('Tecnico').value;
+            const data = document.getElementById('data').value;
+            const motivo = document.getElementById('motivo').value;
+
+            // Verificar se todos os campos estão preenchidos
+            if (!nome || !modelo || !placa || !defeito || !Bl01 || !Bl02 || !Tecnico || !data || !motivo) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            // Criar um objeto com os dados e adicionar ao array
+            const registro = { Nome: nome, Modelo: modelo, Placa: placa, Defeito: defeito , blo1: Bl01 , bl02: Bl02 , tecnico: Tecnico , Data:data , Motivo:motivo };
+            registros.push(registro);
+
+            // Limpar os campos do formulário
+            document.getElementById('car-form').reset();
+
+            alert('Registro salvo com sucesso!');
+        }
+
+        // Função para exportar os dados para Excel
+        function exportarParaExcel() {
+            if (registros.length === 0) {
+                alert('Nenhum dado para exportar!');
+                return;
+            }
+
+            // Criar uma planilha a partir dos dados
+            const planilha = XLSX.utils.json_to_sheet(registros);
+
+            // Criar um workbook e adicionar a planilha
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, planilha, "Registros");
+
+            // Exportar o arquivo Excel
+            XLSX.writeFile(wb, 'registros_carros.xlsx');
+        }
+    </script>
+</body>
+</html>
+
+
