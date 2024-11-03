@@ -228,7 +228,7 @@ path{
  .hot-menu{
     display: flex;
     flex-direction: column;
-     gap:50px;
+     gap: 70px;
  }
  .menu-sobre{
     display: flex;
