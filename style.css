@@ -25,6 +25,25 @@ header{
     background-color: transparent;
     backdrop-filter: blur(20px);
 }
+@media screen  and (max-width: 730px){
+ .Boas-Vindas{
+    display: none;
+ }
+ .hot-menu{
+    display: flex;
+    flex-direction: column;
+ }
+ .menu-sobre{
+    display: flex;
+    flex-direction: column;
+    font-size: 12pt;
+    padding-block: 10px;
+    padding-inline: 10px;
+ }
+ .menu-bar{
+    margin-left: 30px;
+ }
+}
 
 h1{
     
